@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Topic: </label>
-                            <select class="form-control" name="topicID">
+                            <select class="form-control" name="topicID" id="topicID">
                                 <c:forEach items="${requestScope.topics}" var="t">
                                     <c:choose >
                                         <c:when test="${requestScope.question.lesson.topicID == t.topicID}">

@@ -85,8 +85,15 @@
             </section>
 
 
-            <!-- RIGHT -->
-            <jsp:include page="${pageContext.request.contextPath}../../view/searchsider.jsp"/>
+            <!-- RIGHT start of filter/option box -->
+            <section class="option__box">
+                <div class="option__filter">
+                    <div class="option__searchbar">
+                        <form action="coursesearch" method="GET">
+                            <jsp:include page="${pageContext.request.contextPath}../../view/searchsider.jsp"/>
+                        </form>
+                    </div>
+            </section>
         </div>
         <!-- POPUP REGISTER -->
     </div>

@@ -64,7 +64,14 @@
                 </c:otherwise>
             </c:choose>
             <!-- RIGHT start of filter/option box -->
-            <jsp:include page="${pageContext.request.contextPath}../../view/searchsider.jsp"/>
+            <section class="option__box">
+                <div class="option__filter">
+                    <div class="option__searchbar">
+                        <form action="blogsearch" method="GET">
+                            <jsp:include page="${pageContext.request.contextPath}../../view/searchsider.jsp"/>
+                        </form>
+                    </div>
+            </section>
         </div>
         <jsp:include page="${pageContext.request.contextPath}../../view/footer.jsp"/>
         <jsp:include page="${pageContext.request.contextPath}../../view/user_popup.jsp"/>
