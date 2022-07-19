@@ -19,6 +19,10 @@
     width: 70%;
 }
 
+img{
+ object-fit: fill !important;   
+}
+
 .post__item {
     /* border: 1px solid black; */
     box-shadow: 0 0 3px 3px lightgray;
