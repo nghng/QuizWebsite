@@ -128,6 +128,22 @@ public class CourseDBContext extends DBContext {
         }
         return total;
     }
+    
+    public int countManageCourse() {
+        int total = 0;
+        try {
+            String sql = "SELECT COUNT(*) AS Total\n"
+                    + "FROM Course";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;
+    }
 
     public ArrayList<Course> getCoursesForHomePage(Account account) {
         ArrayList<Course> courses = new ArrayList<>();

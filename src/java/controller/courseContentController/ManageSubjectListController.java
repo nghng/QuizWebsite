@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.Account;
 import model.Category;
 import model.Course;
 
@@ -42,13 +43,13 @@ public class ManageSubjectListController extends AuthorizationController {
             page = "1";
         }
         int pageindex = Integer.parseInt(page);
-        int count = courseDBContext.countCourse();
+        int count = courseDBContext.countManageCourse();
         int totalpage = (count % pagesize == 0) ? (count / pagesize) : (count / pagesize) + 1;
         if (pageindex <= 0 || pageindex > totalpage) {
             pageindex = 1;
         }
         ArrayList<Category> categories = dbCate.getCategories(2);
-        ArrayList<Course> courses = courseDBContext.getManageCourses(pageindex, pagesize,null);
+        ArrayList<Course> courses = courseDBContext.getManageCourses(pageindex, pagesize,(Account) request.getSession().getAttribute("account"));
 
         request.setAttribute("categories", categories);
         request.setAttribute("courses", courses);

@@ -15,6 +15,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sale Index</title>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
               integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
               crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -54,11 +55,11 @@
                             <div class="col-md-8">
                                 <div>
                                     <label for="name">Subject name</label>
-                                    <input class="form-control" type="text" id="name" name="name" placeholder="Enter..." required>
+                                    <input class="form-control" type="text" id="name" name="name" value="${requestScope.subjectName}" placeholder="Enter..." required>
                                 </div>
                                 <div>
                                     <label for="owner">Owner email</label>
-                                    <input class="form-control" type="text" list="owners" id="owner" name="owner" placeholder="Enter..." required>
+                                    <input class="form-control" type="text" list="owners" id="owner" name="owner" value="${requestScope.owner}" placeholder="Enter..." required>
                                     <datalist id="owners">
                                         <c:forEach items="${requestScope.expertList}" var="e">
                                             <option value="${e.username}">
@@ -85,8 +86,8 @@
                                 <div>
                                     <label for="featured">Choose whether the subject is featured or not:</label>
                                     <select class="form-control" name="featured" id="featured">
-                                        <option value="1">Featured</option>
-                                        <option value="0">Unfeatured</option>
+                                        <option ${requestScope.featured == "1"?"selected=\"selected\"":""} value="1">Featured</option>
+                                        <option ${requestScope.featured == "0"?"selected=\"selected\"":""} value="0">Unfeatured</option>
                                     </select>
                                 </div>
                             </div>
@@ -99,7 +100,7 @@
                                     </div>
                                     <div>
                                         <label for="description">Description</label>
-                                        <textarea class="form-control" required name="description" id="description"></textarea>
+                                        <textarea class="form-control" required name="description" id="description">${requestScope.description}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -115,53 +116,13 @@
                     </form>
                 </div>
             </aside>
-            <footer>
-                FOOTER
-            </footer>
+                            
         </section>
 
-        <section class="popup">
-            <div class="popup__content">
-                <img src="images/close.png" alt="" class="close">
-
-                <div class="form_user-profile">
-                    <h2>User Profile</h2>
-                    <form action="#">
-                        <div class="user__avatar">
-                            <!-- <input type="file" name="" id=""> -->
-                        </div>
-                        <input type="text" name="email" id="email" disabled placeholder="Your email">
-                        <input type="text" name="firstName" id="firstName" placeholder="Enter your first name">
-                        <input type="text" name="lastName" id="lastName" placeholder="Enter your last name">
-                        <input type="text" name="phone" id="phone" placeholder="Enter your phone">
-                        <div class="profile__gender signup__gender">
-                            <h5>Gender</h5>
-                            <input type="radio" name="" id="">
-                            <p>Male</p>
-                            <input type="radio" name="" id="">
-                            <p>Female</p>
-                        </div>
-                        <input type="text" name="address" id="address" placeholder="Enter your address">
-                        <div class="form__button">
-                            <button type="submit">Save</button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="form__change-password" style="display: none;">
-                    <h2>Change Password</h2>
-                    <form action="#">
-                        <input type="password" placeholder="Enter your current password">
-                        <input type="password" placeholder="Enter new password">
-                        <input type="password" placeholder="Reenter your new password">
-                        <div class="form__button">
-                            <button type="submit">Save</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-        </section>
+        <jsp:include page="${pageContext.request.contextPath}../../view/user_popup.jsp"/>
+        <jsp:include page="${pageContext.request.contextPath}../../view/footer.jsp"/>
+        
+        <script src="${pageContext.request.contextPath}/js/changepass.js"></script>
         <script src="${pageContext.request.contextPath}/js/new_subject.js"></script>
         <script src="${pageContext.request.contextPath}/js/userPopup.js"></script>
         <script src="${pageContext.request.contextPath}/js/profile.js"></script>

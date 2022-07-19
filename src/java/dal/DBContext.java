@@ -11,12 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBContext {
-
     protected Connection connection;
-
-     public DBContext() {
+    
+    public DBContext() {
         try {
-
             String user = "sa";
             String pass = "123456";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=QuizWebsite";
@@ -28,4 +26,5 @@ public class DBContext {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

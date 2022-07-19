@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/popup.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common/profile.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/course_content/manage_subject.css">
-        
+
 
 
 
@@ -46,18 +46,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="c" items="${requestScope.courses}">
-                            <tr class="table__row">
-                                <td>${c.courseID}</td>
-                                <td> <a href="${pageContext.request.contextPath}/managesubject/subjectdetail?id=${c.courseID}" class="view__alink">${c.courseName}</a> </td>
-                                <td>${c.subcategory.subcategoryName}</td>
-                                <td>
-                                    <p> ${c.description} </p>
-                                </td>
-                                <td>${c.owner}</td>
-                                <td>${c.status?"Published":"Unpublished"}</td>
-                            </tr>
-                        </c:forEach>
+                        <c:if test="${requestScope.courses != null}">
+                            <c:forEach var="c" items="${requestScope.courses}">
+                                <tr class="table__row">
+                                    <td>${c.courseID}</td>
+                                    <td> <a href="${pageContext.request.contextPath}/managesubject/subjectdetail?id=${c.courseID}" class="view__alink">${c.courseName}</a> </td>
+                                    <td>${c.subcategory.subcategoryName}</td>
+                                    <td>
+                                        <p> ${c.description} </p>
+                                    </td>
+                                    <td>${c.owner}</td>
+                                    <td>${c.status?"Published":"Unpublished"}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:if>
                     </tbody>
                 </table>
                 <div id="pagination" class="pagination"></div>
@@ -114,7 +116,14 @@
 
         <jsp:include page="${pageContext.request.contextPath}../../view/user_popup.jsp"/>
         <jsp:include page="${pageContext.request.contextPath}../../view/footer.jsp"/>
-
+        <script>
+            function checkAllBox(source, cateID) {
+                checkboxes = document.getElementsByClassName(cateID);
+                for (var i = 0, n = checkboxes.length; i < n; i++) {
+                    checkboxes[i].checked = source.checked;
+                }
+            }
+        </script>
 
         <script src="${pageContext.request.contextPath}/js/script.js"></script>
         <script src="${pageContext.request.contextPath}/js/common/home.js"></script>
@@ -133,13 +142,13 @@
                 integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
         <script>pagger("pagination", ${requestScope.pageindex}, ${requestScope.totalpage}, 3, "${requestScope.url}", "${requestScope.querystring}");
-        
-           <c:if test="${sessionScope.errormessage != null }">
+
+            <c:if test="${sessionScope.errormessage != null }">
             alert("${sessionScope.errormessage}");
                 <c:remove var="errormessage" scope="session" />
             </c:if>
-        
-        
+
+
         </script>
     </body>
 

@@ -34,11 +34,11 @@ import util.Validation;
  *
  * @author Zuys
  */
-@MultipartConfig(location = "E:\\Semester 5\\SWP391\\QuizWebsite-Iteration2-Complete\\summer2022-se1617-g6\\web\\images\\thumbnails", fileSizeThreshold = 1024 * 1024,
-        maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
+@MultipartConfig(location = "D:\\SWP\\I3\\summer2022-se1617-g6\\web\\images\\thumbnails", fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class NewSubjectController extends AuthorizationController {
 
-    final static String SUBJECTPICTUREURI = "E:\\Semester 5\\SWP391\\QuizWebsite-Iteration2-Complete\\summer2022-se1617-g6\\web\\images\\thumbnails";
+    static Path root = Paths.get(".").normalize().toAbsolutePath();
+    final static String SUBJECTPICTUREURI = "D:\\SWP\\I3\\summer2022-se1617-g6\\web\\images\\thumbnails";
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -155,7 +155,6 @@ public class NewSubjectController extends AuthorizationController {
                 request.setAttribute("create_subject_status", "Owner does not exist or is not an expert!");
             }
         } else {
-            request.setAttribute("create_subject_status", "No input problem!");
         }
 
         if (raw_category != null && raw_category.trim().length() != 0) {
@@ -166,6 +165,11 @@ public class NewSubjectController extends AuthorizationController {
         ArrayList<Subcategory> subcategories = dbSubcate2.getSubcategories(categoryid);
         ArrayList<Account> accounts = dbAccount.getAccountByRole(2);
         if (accounts != null) {
+            request.setAttribute("subjectName", raw_subjectName);
+            request.setAttribute("owner", raw_owner);
+            request.setAttribute("featured", raw_featured);
+            request.setAttribute("description", raw_description);
+
             request.setAttribute("cid", categoryid);
             request.setAttribute("categories", categories);
             request.setAttribute("subcategories", subcategories);
