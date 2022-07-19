@@ -96,7 +96,7 @@
 <c:if  test="${sessionScope.account == null}">
     <!-- POPUP -->
     <section class="popup <c:choose>
-                 <c:when test="${sessionScope.profile_status != null || sessionScope.changepass_status != null 
+                 <c:when test="${sessionScope.register_status != null || param.resetPasswordMessage != null 
                                  || sessionScope.login_status != null}">
                      <%="active"%>
                  </c:when>
@@ -105,7 +105,7 @@
 
         <div class="popup__content">
             <div class="popup__login-form" id="popupLoginForm" style="display: <c:choose>
-                     <c:when test="${sessionScope.register_status == null}">
+                     <c:when test="${sessionScope.register_status == null && param.resetPasswordMessage == null}">
                          <%="block; "%>
                      </c:when>
                      <c:otherwise>
@@ -145,7 +145,7 @@
 
 
             <div class="popup__signup-form" style="display: <c:choose>
-                     <c:when test="${sessionScope.register_status != null}">
+                     <c:when test="${sessionScope.register_status != null }">
                          <%="block; "%>
                      </c:when>
                      <c:otherwise>
