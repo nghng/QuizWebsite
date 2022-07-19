@@ -29,12 +29,7 @@
 
     <body>
         <jsp:include page="${pageContext.request.contextPath}../../view/header_for_staff.jsp"/>
-        <ul class="breadcrumb">
-            <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-            <li><a href="${pageContext.request.contextPath}/managesubject">Subject list</a></li>
-            <li><a href="#">Pricepackage detail</a></li>
-
-        </ul> 
+      
 
         <ul class="breadcrumb nav ">
             <li><a href="${pageContext.request.contextPath}/managesubject/subjectdetail/pricepackagedetail?id=${requestScope.course.courseID}" class="addlink headnav currentnav">Price Package</a></li>
@@ -93,7 +88,7 @@
         </div>
 
         <c:if test="${sessionScope.account.role.roleID == 1}">
-            <a class="addlink" href="pricepackageedit?cid=${requestScope.course.courseID}&pid=${requestScope.pricePackage.pricePackageID}">Edit</a>
+            <a class="addlink_ver2" href="pricepackageedit?cid=${requestScope.course.courseID}&pid=${requestScope.pricePackage.pricePackageID}">Edit</a>
 
         </c:if>
 

@@ -12,7 +12,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
 .main-container {
     position: relative;
     min-height: 100vh;
-    
+
 }
 
 .main-content {
@@ -192,3 +192,17 @@ tfoot tr td a.active{
     background-color: #1fe21e;
     color: #fff;  
 }
+.btn_del{
+    text-decoration: none;
+    letter-spacing: 1px;
+    padding: 5px;
+    color: #fff;
+    background-color: #ff6666;
+    border-radius: 5px;
+}
+
+.btn_del:hover{
+    background-color: #ff3333;
+    color: #fff;
+}
+

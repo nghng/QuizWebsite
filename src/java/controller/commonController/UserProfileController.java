@@ -24,11 +24,11 @@ import model.User;
  *
  * @author Zuys
  */
-@MultipartConfig(location = "D:\\SWP391\\SWP391-SE1617-NET_Group06-QuizWebsite\\web\\images\\profile", fileSizeThreshold = 1024 * 1024,
+@MultipartConfig(location = "E:\\Semester 5\\SWP391\\QuizWebsite-Iteration2-Complete\\summer2022-se1617-g6\\web\\images\\profile", fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class UserProfileController extends HttpServlet {
 
-    final static String PICTUREPROFILEURI = "D:\\SWP391\\SWP391-SE1617-NET_Group06-QuizWebsite\\web\\images\\profile";
+    final static String PICTUREPROFILEURI = "E:\\Semester 5\\SWP391\\QuizWebsite-Iteration2-Complete\\summer2022-se1617-g6\\web\\images\\profile";
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -143,7 +143,7 @@ public class UserProfileController extends HttpServlet {
     }
 
     public File getFolderUpload() {
-        File folderUpload = new File("D:\\SWP391\\SWP391-SE1617-NET_Group06-QuizWebsite\\web\\images\\profile");
+        File folderUpload = new File("E:\\Semester 5\\SWP391\\QuizWebsite-Iteration2-Complete\\summer2022-se1617-g6\\web\\images\\profile");
         if (!folderUpload.exists()) {
             folderUpload.mkdirs();
         }

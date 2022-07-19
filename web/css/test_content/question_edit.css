@@ -1,0 +1,107 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 19, 2022, 10:18:53 AM
+    Author     : Hai Tran
+*/
+.headnav:link{
+    color: white !important;
+}
+
+.headnav:visited{
+    color: white !important;
+
+}
+
+.nav{
+    background-color: white !important;
+}
+
+.content{
+    margin: 20px;
+}
+
+.content > *{
+    padding: 8px;
+}
+
+.nav.breadcrumb li+li:before {
+    padding: 8px;
+    color: black;
+    content: "";
+}
+
+img{
+    width: 100%;
+}
+.answer__detail{
+    margin-left: 0px;
+    margin-top: 20px;
+}
+.upperpart__right > *{
+    margin-left: 30px;
+}
+
+.image__preview__data, .video__preview__data,.image__preview, .video__preview{
+    height: 350px;
+}
+
+.image__preview, .video__preview, .audio__preview{
+    margin-top: 50px;
+    display: none;
+}
+
+.media__preview > :not(:first-child){
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+.image__preview__data, .video__preview__data, .audio__preview__data{
+    width: 100%;
+    height: 100%;
+}
+
+.answer{
+    margin: 12px;
+}
+
+.remove__answer{
+    display: none;
+    margin-left: 20px;
+    padding: 3px 20px 3px 20px;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    background: #0056d2;
+}
+
+.add__answer{
+    color: white;
+    border: none;
+    background: none;
+}
+
+.save__button{
+    color: white;
+    border: none;
+    background: none;
+}
+
+.media__file{
+    margin-bottom: 25px;
+}
+
+.file__select{
+    padding: 3px 25px;
+    border-radius: 10px;
+}
+.error_message{
+    font-size: 30px;
+    color: red;
+}
+
+.istrue__label{
+    padding-left: 15px;
+}

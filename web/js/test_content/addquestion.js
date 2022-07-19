@@ -34,22 +34,22 @@ function changeInputFile() {
         document.getElementById("video__preview").style.display = "block";
         document.getElementById("audio__preview").style.display = "none";
         document.getElementById("image__preview").style.display = "none";
-        document.getElementById("upload__icon").style.display = "none";
+        document.getElementById("file__input").style.display = "block";
     } else if (file === "3") {
         document.getElementById("video__preview").style.display = "none";
-        document.getElementById("upload__icon").style.visibility = "hidden";
         document.getElementById("audio__preview").style.display = "block";
         document.getElementById("image__preview").style.display = "none";
+        document.getElementById("file__input").style.display = "block";
     } else if (file === "1") {
         document.getElementById("video__preview").style.display = "none";
-        document.getElementById("upload__icon").style.visibility = "hidden";
         document.getElementById("audio__preview").style.display = "none";
         document.getElementById("image__preview").style.display = "block";
+        document.getElementById("file__input").style.display = "block";
     } else {
+        document.getElementById("file__input").style.display = "none";
         document.getElementById("video__preview").style.display = "none";
         document.getElementById("audio__preview").style.display = "none";
-        document.getElementById("image__preview").style.display = "block";
-        document.getElementById("upload__icon").style.visibility = "hidden";
+        document.getElementById("image__preview").style.display = "none";
     }
 }
 

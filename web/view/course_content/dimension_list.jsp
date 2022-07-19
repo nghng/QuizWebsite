@@ -23,13 +23,7 @@
     </head>
     <body>
         <jsp:include page="${pageContext.request.contextPath}../../view/header_for_staff.jsp"/>
-        <ul class="breadcrumb">
-            <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-            <li><a href="${pageContext.request.contextPath}/managesubject">Subject list</a></li>
-            <li><a href="#">Subject detail</a></li>
-
-        </ul> 
-
+      
         <ul class="breadcrumb nav ">
             <li><a href="${pageContext.request.contextPath}/managesubject/subjectdetail/dimension?id=${requestScope.course.courseID}" class="addlink headnav currentnav" >Dimension</a></li>
             <li><a href="${pageContext.request.contextPath}/managesubject/subjectdetail?id=${requestScope.course.courseID}" class="addlink headnav">Overview</a></li>
@@ -39,9 +33,9 @@
 
         </ul>  
 
-        <a class="addlink" href="dimensionadd?id=${requestScope.course.courseID}">Add dimension</a>
+        <a class="addlink_ver2" href="dimensionadd?id=${requestScope.course.courseID}">Add dimension</a>
 
-        <div class=" d-flex justify-content-center">
+        <div class=" d-flex justify-content-center table__content">
             <div class="" >
                 <table>
                     <thead>

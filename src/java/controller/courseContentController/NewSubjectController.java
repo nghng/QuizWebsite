@@ -4,6 +4,7 @@
  */
 package controller.courseContentController;
 
+import controller.AuthorizationController;
 import dal.AccountDBContext;
 import dal.CategoryDBContext;
 import dal.CourseDBContext;
@@ -33,11 +34,11 @@ import util.Validation;
  *
  * @author Zuys
  */
-@MultipartConfig(location = "D:\\Uni\\Summer2022\\swp\\Students-Projects-Bank-20220509\\03_QuizPractice\\summer2022-se1617-g6-HungLN-HE161003 - Merge\\web\\images\\subject", fileSizeThreshold = 1024 * 1024,
+@MultipartConfig(location = "E:\\Semester 5\\SWP391\\QuizWebsite-Iteration2-Complete\\summer2022-se1617-g6\\web\\images\\thumbnails", fileSizeThreshold = 1024 * 1024,
         maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
-public class NewSubjectController extends HttpServlet {
+public class NewSubjectController extends AuthorizationController {
 
-    final static String SUBJECTPICTUREURI = "D:\\Uni\\Summer2022\\swp\\Students-Projects-Bank-20220509\\03_QuizPractice\\summer2022-se1617-g6-HungLN-HE161003 - Merge\\web\\images\\subject";
+    final static String SUBJECTPICTUREURI = "E:\\Semester 5\\SWP391\\QuizWebsite-Iteration2-Complete\\summer2022-se1617-g6\\web\\images\\thumbnails";
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -48,7 +49,7 @@ public class NewSubjectController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountDBContext dbAccount = new AccountDBContext();
         CategoryDBContext dbCate = new CategoryDBContext();
@@ -76,7 +77,7 @@ public class NewSubjectController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Validation v = new Validation();
         AccountDBContext dbAccount = new AccountDBContext();
@@ -95,10 +96,9 @@ public class NewSubjectController extends HttpServlet {
         String raw_subjectName = request.getParameter("name");
         String raw_owner = request.getParameter("owner");
         String raw_subcategoryid = request.getParameter("subcategory");
-        String raw_published = request.getParameter("published");
         String raw_featured = request.getParameter("featured");
         String raw_description = request.getParameter("description");
-        String[] input = {raw_subjectName, raw_owner, raw_subcategoryid, raw_published, raw_featured, raw_description};
+        String[] input = {raw_subjectName, raw_owner, raw_subcategoryid, raw_featured, raw_description};
 
         if ((raw_subjectName == null || raw_subjectName.trim().length() == 0)
                 && (raw_owner == null || raw_owner.trim().length() == 0) && (raw_description == null || raw_description.trim().length() == 0)) {
@@ -116,7 +116,7 @@ public class NewSubjectController extends HttpServlet {
                 request.setAttribute("expertList", accounts);
                 request.getRequestDispatcher("view/course_content/new_subject.jsp").forward(request, response);
             }
-        }else if (v.checkNullOrBlank(input)) {
+        } else if (v.checkNullOrBlank(input)) {
             Account owner = dbAccount.isExistAccount(raw_owner);
             if (owner != null && owner.getRole().getRoleID() == 2) {
                 if (checkFileType(subjectPicName)) {
@@ -135,7 +135,7 @@ public class NewSubjectController extends HttpServlet {
                         course.setCourseName(raw_subjectName);
                         course.setOwner(raw_owner);
                         course.setSubcategory(dbSubcate1.getSubcategory(Integer.parseInt(raw_subcategoryid)));
-                        course.setStatus(raw_published.matches("1"));
+                        course.setStatus(false);
                         course.setIsFeatured(raw_featured.matches("1"));
                         course.setDescription(raw_description);
                         course.setThumbnailUrl(courseID + ".jpeg");

@@ -312,10 +312,6 @@
         <servlet-class>controller.testContentController.renderCourse</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>renderQuestionGroup</servlet-name>
-        <servlet-class>controller.testContentController.renderQuestionGroup</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AddQuestionController</servlet-name>
         <servlet-class>controller.testContentController.AddQuestionController</servlet-class>
     </servlet>
@@ -332,12 +328,76 @@
         <servlet-class>controller.testContentController.ViewQuestionController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>QuizHandleController</servlet-name>
+        <servlet-class>controller.customerControllers.QuizHandleController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TakingQuizController</servlet-name>
+        <servlet-class>controller.customerControllers.TakingQuizController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetAnswerFilter</servlet-name>
+        <servlet-class>controller.customerControllers.GetAnswerFilter</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ScoreQuizController</servlet-name>
+        <servlet-class>controller.customerControllers.ScoreQuizController</servlet-class>
+          </servlet>
+    <servlet>
         <servlet-name>DashboardController</servlet-name>
         <servlet-class>controller.marketingController.DashboardController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChartController</servlet-name>
         <servlet-class>controller.marketingController.ChartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuizReviewController</servlet-name>
+        <servlet-class>controller.customerControllers.QuizReviewController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckingQuizController</servlet-name>
+        <servlet-class>controller.customerControllers.CheckingQuizController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetReviewFilter</servlet-name>
+        <servlet-class>controller.customerControllers.GetReviewFilter</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuizListController</servlet-name>
+        <servlet-class>controller.customerControllers.QuizListForUserController</servlet-class>
+           </servlet>
+    <servlet>
+        <servlet-name>renderPricePackage</servlet-name>
+        <servlet-class>controller.saleController.renderPricePackage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PracticeListController</servlet-name>
+        <servlet-class>controller.customerControllers.PracticeListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PracticeSearchController</servlet-name>
+        <servlet-class>controller.customerControllers.PracticeSearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PracticeDetalController</servlet-name>
+        <servlet-class>controller.customerControllers.PracticeDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RenderTopic</servlet-name>
+        <servlet-class>controller.customerControllers.RenderTopic</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RenderQuizName</servlet-name>
+        <servlet-class>controller.customerControllers.RenderQuizName</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>QuizDelete</servlet-name>
+        <servlet-class>controller.testContentController.QuizDelete</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>renderMaximunQuestion</servlet-name>
+        <servlet-class>controller.customerControllers.renderMaximunQuestion</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPasswordController</servlet-name>
@@ -660,10 +720,6 @@
         <url-pattern>/rendercourse</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>renderQuestionGroup</servlet-name>
-        <url-pattern>/renderquestiongroup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AddQuestionController</servlet-name>
         <url-pattern>/addquestion</url-pattern>
     </servlet-mapping>
@@ -680,12 +736,76 @@
         <url-pattern>/viewquestion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>QuizHandleController</servlet-name>
+        <url-pattern>/quizhandle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TakingQuizController</servlet-name>
+        <url-pattern>/qhandle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAnswerFilter</servlet-name>
+        <url-pattern>/filteranswer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScoreQuizController</servlet-name>
+        <url-pattern>/score</url-pattern>
+        </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>DashboardController</servlet-name>
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChartController</servlet-name>
         <url-pattern>/marketing/chart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizReviewController</servlet-name>
+        <url-pattern>/quizreview</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckingQuizController</servlet-name>
+        <url-pattern>/qreview</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetReviewFilter</servlet-name>
+        <url-pattern>/reviewfilter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizListController</servlet-name>
+        <url-pattern>/quizlist</url-pattern>
+          </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>renderPricePackage</servlet-name>
+        <url-pattern>/renderprice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PracticeListController</servlet-name>
+        <url-pattern>/practicelist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PracticeSearchController</servlet-name>
+        <url-pattern>/searchpractice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PracticeDetalController</servlet-name>
+        <url-pattern>/practicedetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderTopic</servlet-name>
+        <url-pattern>/rendertopic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderQuizName</servlet-name>
+        <url-pattern>/renderquizname</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuizDelete</servlet-name>
+        <url-pattern>/quizzes/del</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>renderMaximunQuestion</servlet-name>
+        <url-pattern>/rendermaxquestion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

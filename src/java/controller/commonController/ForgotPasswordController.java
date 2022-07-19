@@ -29,16 +29,6 @@ public class ForgotPasswordController extends HttpServlet {
     final static String HOMESERVLETNAME = "HomePageController";
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -83,7 +73,7 @@ public class ForgotPasswordController extends HttpServlet {
             EmailUtils emailUtils = new EmailUtils();
             String token = emailUtils.createToken(username);
 
-            sb.append("http://localhost:1907/SWP391-SE1617-NET_Group06-QuizWebsite/forgotPasswordNext?token="
+            sb.append("http://localhost:9999/SWP391-SE1617-NET_Group06-QuizWebsite/forgotPasswordNext?token="
                     + token);
             email.setContent(sb.toString());
 

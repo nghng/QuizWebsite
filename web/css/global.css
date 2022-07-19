@@ -223,6 +223,15 @@ ul.breadcrumb li a:hover {
     font-size: 0.8rem;
 }
 
+.addlink_ver2 {
+    text-decoration: none;
+    letter-spacing: 1px;
+    font-weight: 600;
+    padding: 10px;
+    color: #fff;
+    background-color: #3db743;
+    border-radius: 10px;
+}
 tfoot tr td a{
     color: #000;
     font-size: 1rem;
@@ -236,6 +245,34 @@ tfoot tr td a:not(.active):hover{
 
 tfoot tr td a.active{
     background-color: #1fe21e;
-    color: #fff;  
+    color: #fff;
 }
+
+.submitted{
+    color: red;
+}
+
+.paid{
+    color: green;
+}
+
+.edit_button{
+    background-color: orange;
+    color: #fff;
+    border-radius: 0.2rem;
+    padding: 0.2rem;
+    margin-bottom: 10px;
+}
+
+.cancel_button{
+    padding: 0.2rem;
+    background-color: #ffcdd2;
+    color: #c62828;
+    text-align: center;
+    width: 60px;
+    border-radius: 0.2rem;
+
+}
+
+
 

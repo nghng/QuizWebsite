@@ -4,11 +4,13 @@
  */
 package controller.testContentController;
 
+import controller.AuthorizationController;
 import dal.CategoryDBContext;
 import dal.CourseDBContext;
 import dal.QuizAttributeDBContext;
 import dal.QuizDBContext;
 import dal.SubCategoryDBContext;
+import dal.UserQuizDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -26,7 +28,7 @@ import util.Validation;
  *
  * @author long
  */
-public class QuizEditController extends HttpServlet {
+public class QuizEditController extends AuthorizationController {
 
     Validation v = new Validation();
     CategoryDBContext cadbc = new CategoryDBContext();
@@ -77,7 +79,7 @@ public class QuizEditController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int ID;
         ArrayList<Category> cates = cadbc.getCategories(2);
@@ -110,7 +112,7 @@ public class QuizEditController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         int ID;
@@ -152,7 +154,7 @@ public class QuizEditController extends HttpServlet {
 
             if (request.getParameter("ID") != null) {
                 ID = Integer.parseInt(request.getParameter("ID"));
-                if (qdbc.updateQuiz(ID, numQ, pass, level, duration, type, courseID, name, des, note) == true) {
+                if (qdbc.updateQuiz(ID, numQ, pass, level, duration, type, courseID, name, des, false, note) == true) {
                     log("true");
                     response.sendRedirect("../quizzes/view?id=" + ID + "&mess=" + updateOk);
 
@@ -163,6 +165,12 @@ public class QuizEditController extends HttpServlet {
             } else {
                 if (qdbc.addQuiz(numQ, pass, level, duration, type, courseID, name, des, note)) {
                     ID = qdbc.getLatestID();
+                    if (type == 1) {
+                        UserQuizDBContext uqdbc = new UserQuizDBContext();
+                        ArrayList<Integer> ques = uqdbc.getRandomQuestion(numQ, courseID);
+                        log(ques.toString());
+                        uqdbc.insertQuestion(ID, ques);
+                    }
                     response.sendRedirect("../quizzes/view?id=" + ID + "&mess=" + insertOk);
                 } else {
                     response.sendRedirect("../quizzes" + "?mess=" + insertErr);
