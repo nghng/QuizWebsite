@@ -109,6 +109,7 @@
     crossorigin="anonymous"></script>
     <script src="js/common/home.js"></script>
     <script src="js/register.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
                                     $(document).ready(function () {
         <c:choose>
