@@ -79,6 +79,7 @@
                                     <div class="post__info">
                                         <div class="post__thumbnail">
                                             <img src="images/blog/${p.thumbnailUrl}" alt="alt"/>
+                                            <div class="post__background"></div>
                                             <div class="post__short">
                                                 <p><i class="fa fa-calendar-alt"></i>${p.updatedDate}</p>
                                                 <p><i class="fa fa-bars"></i>${p.subcategory.subcategoryName}</p>
@@ -110,13 +111,13 @@
                     <div class="subject__content">
                         <c:forEach items="${requestScope.courses}" var="c">
                             <div class="subject__card">
-                                <a href="subjectdetail?subjectID=${c.courseID}">
+                                <a href="subjectdetail?subjectID=${c.courseID}" class="subject__link">
                                     <div class="subject__card-content">
                                         <div class="subject__thumnail post__thumbnail">
                                             <img src="images/thumbnails/${c.thumbnailUrl}">
                                         </div>
 
-                                        <div class="subject__details">
+                                        <div class="subject__details post__content">
                                             <div class="subject__title post__title">
                                                 <p>${c.courseName}</p>
                                             </div>
@@ -129,6 +130,7 @@
                             </div>
                         </c:forEach>
                     </div>
+                </div>
             </section>
             <jsp:include page="${pageContext.request.contextPath}../../view/user_popup.jsp" />
             <jsp:include page="${pageContext.request.contextPath}../../view/footer.jsp"/>
