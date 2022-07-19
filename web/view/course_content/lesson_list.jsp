@@ -60,7 +60,7 @@
                     <input type="submit" value="Search">
                 </form>
                 <div class="add__button">
-                    <a class="addlink" href="addlesson?">Add lesson</a>
+                    <a class="addlink" href="addlesson?courseID=${requestScope.course.courseID}">Add lesson</a>
                 </div>
             </div>
 

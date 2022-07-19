@@ -19,7 +19,7 @@
         <jsp:include page="${pageContext.request.contextPath}../../view/header_for_staff.jsp"/>
 
         <section class="main">
-            <h1>Lesson Details</h1>
+            <h1>Add L   esson</h1>
 
             <h4>Subject name: ${requestScope.course.courseName}</h4>
 
