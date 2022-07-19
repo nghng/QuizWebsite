@@ -4,6 +4,7 @@
  */
 package controller.testContentController;
 
+import controller.AuthorizationController;
 import dal.DimensionDBContext;
 import dal.LessonDBContext;
 import dal.LevelDBContext;
@@ -32,7 +33,11 @@ import util.Validation;
  * @author Hai Tran
  */
 @MultipartConfig
-public class EditQuestionController extends HttpServlet {
+public class EditQuestionController extends AuthorizationController {
+
+    private static final String WRONGFILETYPE = "Wrong file input format";
+    private static final String MISSINGINPUT = "You must entered required fields";
+    private static final String ERRORSQL = "Please try again";
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -44,7 +49,7 @@ public class EditQuestionController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         TopicDBContext dbTopic = new TopicDBContext();
         DimensionDBContext dbDimension = new DimensionDBContext();
@@ -52,9 +57,9 @@ public class EditQuestionController extends HttpServlet {
         LevelDBContext dbLevel = new LevelDBContext();
         int questionID = Integer.parseInt(request.getParameter("questionID"));
         Question question = dbQuestion.getQuestion(questionID);
-        ArrayList<Topic> topics = dbTopic.getTopics(1);
+        ArrayList<Topic> topics = dbTopic.getTopics(question.getCourse().getCourseID());
         ArrayList<Level> levels = dbLevel.getAllLevel();
-        ArrayList<Dimension> dimensions = dbDimension.getDimensionsByCourseID(1);
+        ArrayList<Dimension> dimensions = dbDimension.getDimensionsByCourseID(question.getCourse().getCourseID());
         request.setAttribute("topics", topics);
         request.setAttribute("dimensions", dimensions);
         request.setAttribute("question", question);
@@ -71,7 +76,7 @@ public class EditQuestionController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String rawQuestionID = request.getParameter("questionID");
         String rawQuestionContent = request.getParameter("questioncontent");
@@ -99,7 +104,7 @@ public class EditQuestionController extends HttpServlet {
         rawParameter.add(rawExplanation);
 
         Validation validation = new Validation();
-        
+
         if (validation.checkNullOrBlank(rawParameter)) {
             int questionID = Integer.parseInt(rawQuestionID);
             int lessonID = Integer.parseInt(rawLessonID);
@@ -145,19 +150,83 @@ public class EditQuestionController extends HttpServlet {
                         QuestionDBContext dbQuestion = new QuestionDBContext();
                         questionID = dbQuestion.updateQuestion(questionID, rawQuestionContent, mediaURL.getSubmittedFileName(), lessonID, dimensionID, levelID, rawExplanation, mediaID, rawMediaType, 1, answers);
                         String fileName = "question_media_" + questionID + rawMediaType;
-                        UploadFile.copyPartToFile(mediaURL, realPath + "/" + fileName);
-                        UploadFile.copyPartToFile(mediaURL, realPathWeb + "/" + fileName);
+                        if (mediaID != 4) {
+                            UploadFile.copyPartToFile(mediaURL, realPath + "/" + fileName);
+                            UploadFile.copyPartToFile(mediaURL, realPathWeb + "/" + fileName);
+                        }
+                        response.sendRedirect("viewquestion?questionID=" + questionID);
+                    } else if (mediaURL.getSize() == 0) {
+                        QuestionDBContext dbQuestion = new QuestionDBContext();
+                        Question question = dbQuestion.getQuestion(questionID);
+                        String media = question.getMediaURL();
+                        String[] part = media.split("\\.");
+                        questionID = dbQuestion.updateQuestion(questionID, rawQuestionContent, question.getMediaURL(), lessonID, dimensionID, levelID, rawExplanation, mediaID, "." + part[1], 1, answers);
+                        response.sendRedirect("viewquestion?questionID=" + questionID);
+                    } else {
+                        TopicDBContext dbTopic = new TopicDBContext();
+                        DimensionDBContext dbDimension = new DimensionDBContext();
+                        QuestionDBContext dbQuestion = new QuestionDBContext();
+                        LevelDBContext dbLevel = new LevelDBContext();
+                        Question question = dbQuestion.getQuestion(questionID);
+                        ArrayList<Topic> topics = dbTopic.getTopics(question.getCourse().getCourseID());
+                        ArrayList<Level> levels = dbLevel.getAllLevel();
+                        ArrayList<Dimension> dimensions = dbDimension.getDimensionsByCourseID(question.getCourse().getCourseID());
+                        request.setAttribute("topics", topics);
+                        request.setAttribute("dimensions", dimensions);
+                        request.setAttribute("question", question);
+                        request.setAttribute("levels", levels);
+                        request.setAttribute("message", "Missing media file");
+                        request.getRequestDispatcher("/view/test_content/question_edit.jsp").forward(request, response);
                     }
                 } else {
-
+                    TopicDBContext dbTopic = new TopicDBContext();
+                    DimensionDBContext dbDimension = new DimensionDBContext();
+                    QuestionDBContext dbQuestion = new QuestionDBContext();
+                    LevelDBContext dbLevel = new LevelDBContext();
+                    Question question = dbQuestion.getQuestion(questionID);
+                    ArrayList<Topic> topics = dbTopic.getTopics(question.getCourse().getCourseID());
+                    ArrayList<Level> levels = dbLevel.getAllLevel();
+                    ArrayList<Dimension> dimensions = dbDimension.getDimensionsByCourseID(question.getCourse().getCourseID());
+                    request.setAttribute("topics", topics);
+                    request.setAttribute("dimensions", dimensions);
+                    request.setAttribute("question", question);
+                    request.setAttribute("levels", levels);
+                    request.setAttribute("message", "Missing media file");
+                    request.getRequestDispatcher("/view/test_content/question_edit.jsp").forward(request, response);
                 }
             } else {
-
+                TopicDBContext dbTopic = new TopicDBContext();
+                DimensionDBContext dbDimension = new DimensionDBContext();
+                QuestionDBContext dbQuestion = new QuestionDBContext();
+                LevelDBContext dbLevel = new LevelDBContext();
+                Question question = dbQuestion.getQuestion(questionID);
+                ArrayList<Topic> topics = dbTopic.getTopics(question.getCourse().getCourseID());
+                ArrayList<Level> levels = dbLevel.getAllLevel();
+                ArrayList<Dimension> dimensions = dbDimension.getDimensionsByCourseID(question.getCourse().getCourseID());
+                request.setAttribute("topics", topics);
+                request.setAttribute("dimensions", dimensions);
+                request.setAttribute("question", question);
+                request.setAttribute("levels", levels);
+                request.setAttribute("message", WRONGFILETYPE);
+                request.getRequestDispatcher("/view/test_content/question_edit.jsp").forward(request, response);
             }
         } else {
-
+            TopicDBContext dbTopic = new TopicDBContext();
+            DimensionDBContext dbDimension = new DimensionDBContext();
+            QuestionDBContext dbQuestion = new QuestionDBContext();
+            LevelDBContext dbLevel = new LevelDBContext();
+            int questionID = Integer.parseInt(request.getParameter("questionID"));
+            Question question = dbQuestion.getQuestion(questionID);
+            ArrayList<Topic> topics = dbTopic.getTopics(question.getCourse().getCourseID());
+            ArrayList<Level> levels = dbLevel.getAllLevel();
+            ArrayList<Dimension> dimensions = dbDimension.getDimensionsByCourseID(question.getCourse().getCourseID());
+            request.setAttribute("topics", topics);
+            request.setAttribute("dimensions", dimensions);
+            request.setAttribute("question", question);
+            request.setAttribute("levels", levels);
+            request.setAttribute("message", MISSINGINPUT);
+            request.getRequestDispatcher("/view/test_content/question_edit.jsp").forward(request, response);
         }
-
     }
 
     /**

@@ -4,6 +4,7 @@
  */
 package controller.testContentController;
 
+import controller.AuthorizationController;
 import dal.DimensionDBContext;
 import dal.LessonDBContext;
 import dal.QuestionDBContext;
@@ -28,7 +29,7 @@ import util.Validation;
  * @author Hai Tran
  */
 @MultipartConfig
-public class AddQuestionController extends HttpServlet {
+public class AddQuestionController extends AuthorizationController {
 
     private static final String WRONGFILETYPE = "Wrong file input format";
     private static final String MISSINGINPUT = "You must entered required fields";
@@ -44,13 +45,14 @@ public class AddQuestionController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         TopicDBContext dbTopic = new TopicDBContext();
         DimensionDBContext dbDimension = new DimensionDBContext();
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         ArrayList<Topic> topics = dbTopic.getTopics(courseID);
         ArrayList<Dimension> dimensions = dbDimension.getDimensionsByCourseID(courseID);
+        request.setAttribute("courseID", courseID);
         request.setAttribute("topics", topics);
         request.setAttribute("dimensions", dimensions);
         request.getRequestDispatcher("/view/test_content/question_detail.jsp").forward(request, response);
@@ -65,7 +67,7 @@ public class AddQuestionController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String rawQuestionContent = request.getParameter("questioncontent");
         String rawLessonID = request.getParameter("lessonID");
@@ -121,22 +123,46 @@ public class AddQuestionController extends HttpServlet {
                             realPathWeb = realPath.substring(0, realPath.indexOf("build"));
                             realPathWeb += "web\\media\\video";
                             break;
-                        default:
+                        case 3:
                             realPath = request.getServletContext().getRealPath("/media/audio");
                             realPathWeb = realPath.substring(0, realPath.indexOf("build"));
                             realPathWeb += "web\\media\\audio";
+                            break;
+                        default:
                             break;
                     }
                     QuestionDBContext dbQuestion = new QuestionDBContext();
                     int questionID = dbQuestion.insertQuestion(rawQuestionContent, mediaURL.getSubmittedFileName(), lessonID, dimensionID, levelID, rawExplanation, mediaID, rawMediaType, 1, answers);
                     String fileName = "question_media_" + questionID + rawMediaType;
-                    UploadFile.copyPartToFile(mediaURL, realPath + "/" + fileName);
-                    UploadFile.copyPartToFile(mediaURL, realPathWeb + "/" + fileName);
+                    if (mediaID != 4) {
+                        UploadFile.copyPartToFile(mediaURL, realPath + "/" + fileName);
+                        UploadFile.copyPartToFile(mediaURL, realPathWeb + "/" + fileName);
+                    }
+                    response.sendRedirect("viewquestion?questionID=" + questionID);
                 }
             } else {
-
+                TopicDBContext dbTopic = new TopicDBContext();
+                DimensionDBContext dbDimension = new DimensionDBContext();
+                int courseID = Integer.parseInt(request.getParameter("courseID"));
+                ArrayList<Topic> topics = dbTopic.getTopics(courseID);
+                ArrayList<Dimension> dimensions = dbDimension.getDimensionsByCourseID(courseID);
+                request.setAttribute("topics", topics);
+                request.setAttribute("courseID", courseID);
+                request.setAttribute("dimensions", dimensions);
+                request.setAttribute("message", WRONGFILETYPE);
+                request.getRequestDispatcher("/view/test_content/question_detail.jsp").forward(request, response);
             }
         } else {
+            TopicDBContext dbTopic = new TopicDBContext();
+            DimensionDBContext dbDimension = new DimensionDBContext();
+            int courseID = Integer.parseInt(request.getParameter("courseID"));
+            ArrayList<Topic> topics = dbTopic.getTopics(courseID);
+            ArrayList<Dimension> dimensions = dbDimension.getDimensionsByCourseID(courseID);
+            request.setAttribute("topics", topics);
+            request.setAttribute("courseID", courseID);
+            request.setAttribute("dimensions", dimensions);
+            request.setAttribute("message", MISSINGINPUT);
+            request.getRequestDispatcher("/view/test_content/question_detail.jsp").forward(request, response);
         }
 
     }

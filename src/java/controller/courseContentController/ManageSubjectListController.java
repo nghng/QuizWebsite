@@ -5,6 +5,7 @@
 
 package controller.courseContentController;
 
+import controller.AuthorizationController;
 import dal.CategoryDBContext;
 import dal.CourseDBContext;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.Account;
 import model.Category;
 import model.Course;
 
@@ -21,7 +23,7 @@ import model.Course;
  *
  * @author Zuys
  */
-public class ManageSubjectListController extends HttpServlet { 
+public class ManageSubjectListController extends AuthorizationController { 
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -30,7 +32,7 @@ public class ManageSubjectListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         CourseDBContext courseDBContext = new CourseDBContext();
         CategoryDBContext dbCate = new CategoryDBContext();
@@ -41,13 +43,13 @@ public class ManageSubjectListController extends HttpServlet {
             page = "1";
         }
         int pageindex = Integer.parseInt(page);
-        int count = courseDBContext.countCourse();
+        int count = courseDBContext.countManageCourse();
         int totalpage = (count % pagesize == 0) ? (count / pagesize) : (count / pagesize) + 1;
         if (pageindex <= 0 || pageindex > totalpage) {
             pageindex = 1;
         }
         ArrayList<Category> categories = dbCate.getCategories(2);
-        ArrayList<Course> courses = courseDBContext.getManageCourses(pageindex, pagesize,null);
+        ArrayList<Course> courses = courseDBContext.getManageCourses(pageindex, pagesize,(Account) request.getSession().getAttribute("account"));
 
         request.setAttribute("categories", categories);
         request.setAttribute("courses", courses);
@@ -66,7 +68,7 @@ public class ManageSubjectListController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     }
 

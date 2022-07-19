@@ -152,13 +152,13 @@
                 <br>
             </div>
 
-            <footer>
-                FOOTER
-            </footer>
+
         </aside>
     </section>
+    <jsp:include page="${pageContext.request.contextPath}../../view/footer.jsp"/>
 
     <jsp:include page="${pageContext.request.contextPath}../../view/user_popup.jsp"/>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery.fancytable/dist/fancyTable.min.js"></script>
     <script type="text/javascript">

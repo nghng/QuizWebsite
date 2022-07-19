@@ -1,9 +1,10 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller.courseContentController;
 
+import controller.AuthorizationController;
 import dal.AccountDBContext;
 import dal.CategoryDBContext;
 import dal.CourseDBContext;
@@ -23,7 +24,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.ws.rs.ApplicationPath;
 import model.Account;
 import model.Category;
 import model.Course;
@@ -35,7 +35,7 @@ import util.Validation;
  * @author Zuys
  */
 @MultipartConfig(location = "D:\\SWP\\I3\\summer2022-se1617-g6\\web\\images\\thumbnails", fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
-public class NewSubjectController extends HttpServlet {
+public class NewSubjectController extends AuthorizationController {
 
     static Path root = Paths.get(".").normalize().toAbsolutePath();
     final static String SUBJECTPICTUREURI = "D:\\SWP\\I3\\summer2022-se1617-g6\\web\\images\\thumbnails";
@@ -49,7 +49,7 @@ public class NewSubjectController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountDBContext dbAccount = new AccountDBContext();
         CategoryDBContext dbCate = new CategoryDBContext();
@@ -77,7 +77,7 @@ public class NewSubjectController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Validation v = new Validation();
         AccountDBContext dbAccount = new AccountDBContext();
@@ -116,7 +116,7 @@ public class NewSubjectController extends HttpServlet {
                 request.setAttribute("expertList", accounts);
                 request.getRequestDispatcher("view/course_content/new_subject.jsp").forward(request, response);
             }
-        }else if (v.checkNullOrBlank(input)) {
+        } else if (v.checkNullOrBlank(input)) {
             Account owner = dbAccount.isExistAccount(raw_owner);
             if (owner != null && owner.getRole().getRoleID() == 2) {
                 if (checkFileType(subjectPicName)) {
@@ -155,7 +155,6 @@ public class NewSubjectController extends HttpServlet {
                 request.setAttribute("create_subject_status", "Owner does not exist or is not an expert!");
             }
         } else {
-            request.setAttribute("create_subject_status", "No input problem!");
         }
 
         if (raw_category != null && raw_category.trim().length() != 0) {
@@ -166,6 +165,11 @@ public class NewSubjectController extends HttpServlet {
         ArrayList<Subcategory> subcategories = dbSubcate2.getSubcategories(categoryid);
         ArrayList<Account> accounts = dbAccount.getAccountByRole(2);
         if (accounts != null) {
+            request.setAttribute("subjectName", raw_subjectName);
+            request.setAttribute("owner", raw_owner);
+            request.setAttribute("featured", raw_featured);
+            request.setAttribute("description", raw_description);
+
             request.setAttribute("cid", categoryid);
             request.setAttribute("categories", categories);
             request.setAttribute("subcategories", subcategories);
